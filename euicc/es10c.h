@@ -34,6 +34,7 @@ struct es10c_profile_info_list
     enum es10c_profile_state profileState;
     enum es10c_profile_class profileClass;
     char *profileNickname;
+    int profileNicknameSize;
     char *serviceProviderName;
     char *profileName;
     enum es10c_icon_type iconType;
@@ -64,6 +65,6 @@ int es10c_disable_profile(struct euicc_ctx *ctx, const char *id, uint8_t refresh
 int es10c_delete_profile(struct euicc_ctx *ctx, const char *id);
 int es10c_euicc_memory_reset(struct euicc_ctx *ctx);
 int es10c_get_eid(struct euicc_ctx *ctx, char **eidValue);
-int es10c_set_nickname(struct euicc_ctx *ctx, const char *iccid, const char *profileNickname);
+int es10c_set_nickname(struct euicc_ctx *ctx, const char *iccid, const char *profileNickname, int size);
 
 void es10c_profile_info_list_free_all(struct es10c_profile_info_list *profileInfoList);

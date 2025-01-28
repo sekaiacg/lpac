@@ -106,6 +106,7 @@ int es10c_get_profiles_info(struct euicc_ctx *ctx, struct es10c_profile_info_lis
                 {
                     memcpy(p->profileNickname, tmpnode.value, tmpnode.length);
                     p->profileNickname[tmpnode.length] = '\0';
+                    p->profileNicknameSize = tmpnode.length;
                 }
                 break;
             case 0x91:
@@ -432,7 +433,7 @@ exit:
     return fret;
 }
 
-int es10c_set_nickname(struct euicc_ctx *ctx, const char *iccid, const char *profileNickname)
+int es10c_set_nickname(struct euicc_ctx *ctx, const char *iccid, const char *profileNickname, int size)
 {
     int fret = 0;
     uint8_t asn1iccid[10];
@@ -461,7 +462,7 @@ int es10c_set_nickname(struct euicc_ctx *ctx, const char *iccid, const char *pro
     n_iccid.pack.next = &n_profileNickname;
 
     n_profileNickname.tag = 0x90;
-    n_profileNickname.length = strlen(profileNickname);
+    n_profileNickname.length = size;
     n_profileNickname.value = (const uint8_t *)profileNickname;
 
     reqlen = sizeof(ctx->apdu._internal.request_buffer.body);
